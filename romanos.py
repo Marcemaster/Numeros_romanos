@@ -6,6 +6,16 @@ simbolos = {
     'millares': ['', 'M', 'MM', 'MMM'],
 }
 
+romanos = {
+    'I': 1,
+    'V': 5,
+    'X': 10,
+    'L': 50,
+    'C': 100,
+    'D': 500,
+    'M': 1000,
+}
+
 
 def validar_n(n):
     if not isinstance(n, int):
@@ -37,3 +47,24 @@ def a_romano(n):
     componentes = (millares, centenas, decenas, unidades)
 
     return simbolos['millares'][millares] + simbolos['centenas'][centenas] + simbolos['decenas'][decenas] + simbolos['unidades'][unidades]
+
+
+def a_numero(n):
+    acumulador = 0
+    valorAnt = 0
+    for caracter in n:
+        valor = romanos[caracter]
+        if valor > valorAnt:
+            if valorAnt in (5, 50, 500):
+                raise ValueError("No se pueden restar V, L, D")
+            if valorAnt > 0 and valor > 10*valorAnt:
+                raise ValueError("No se pueden restar entre dígitos 10 veces mayores.")
+
+            else:
+                acumulador += (valor - valorAnt*2)
+
+        else:
+            acumulador += valor
+
+        valorAnt = valor
+    return acumulador
