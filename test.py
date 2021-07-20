@@ -28,4 +28,12 @@ class RomanosTest(unittest.TestCase):
             a_numero('IM')
             a_numero('XM')
             a_numero('XD')
-        
+
+    def test_no_mas_de_tres_repeticiones(self):
+        self.assertEqual(a_numero('III'), 3)
+        with self.assertRaises(ValueError):
+            a_numero('IIII')
+
+    def test_no_restas_dos_iguales(self):
+        with self.assertRaises(ValueError):
+            a_numero('CCM')        
