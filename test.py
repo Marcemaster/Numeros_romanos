@@ -14,6 +14,8 @@ class RomanosTest(unittest.TestCase):
     def test_no_se_restan_VLD(self):
         with self.assertRaises(ValueError):
             a_numero('VC')
+            a_numero('LD')
+            a_numero('DM')
 
     def test_no_se_resta_mas_de_un_orden(self):
         self.assertEqual(a_numero('IV'), 4)
@@ -21,7 +23,7 @@ class RomanosTest(unittest.TestCase):
         self.assertEqual(a_numero('XL'), 40)
         self.assertEqual(a_numero('XC'), 90)
         self.assertEqual(a_numero('CD'), 400)
-        self.assertEqual(a_numero('CM'),900)
+        self.assertEqual(a_numero('CM'), 900)
         with self.assertRaises(ValueError):
             a_numero('IL')
             a_numero('IC')
@@ -33,7 +35,15 @@ class RomanosTest(unittest.TestCase):
         self.assertEqual(a_numero('III'), 3)
         with self.assertRaises(ValueError):
             a_numero('IIII')
+            a_numero('VVVV')
+            a_numero('XXXX')
+            a_numero('CCCC')
+            a_numero('DDDD')
 
-    def test_no_restas_dos_iguales(self):
+    def test_no_resta_dos_iguales(self):
         with self.assertRaises(ValueError):
-            a_numero('CCM')        
+            a_numero('CCM')
+            a_numero('XXL')
+            a_numero('IIV')
+            a_numero('IIX')
+            a_numero('CCD')

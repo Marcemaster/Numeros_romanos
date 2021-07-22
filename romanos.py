@@ -17,6 +17,14 @@ romanos = {
 }
 
 
+def caracteres_correctos(n):
+    for c in romanos.keys():
+        c = c*4
+        if c in n:
+            return False
+    return True
+
+
 def validar_n(n):
     if not isinstance(n, int):
         raise ValueError("{} debe ser un entero".format(n))
@@ -52,19 +60,29 @@ def a_romano(n):
 def a_numero(n):
     acumulador = 0
     valorAnt = 0
-    for caracter in n:
-        valor = romanos[caracter]
-        if valor > valorAnt:
-            if valorAnt in (5, 50, 500):
-                raise ValueError("No se pueden restar V, L, D")
-            if valorAnt > 0 and valor > 10*valorAnt:
-                raise ValueError("No se pueden restar entre dígitos 10 veces mayores.")
+    caracterAnt = ""
+    if caracteres_correctos(n):
+        for caracter in n:
+            valor = romanos[caracter]
+            if valor > valorAnt:
+                if valorAnt > 0 and n[n.index(caracterAnt)+1] == caracterAnt:
+                    raise ValueError(
+                        "No se puede restar dos veces al mismo número.")
+                if valorAnt in (5, 50, 500):
+                    raise ValueError("No se pueden restar V, L, D")
+                if valorAnt > 0 and valor > 10*valorAnt:
+                    raise ValueError(
+                        "No se pueden restar entre dígitos 10 veces mayores.")
+
+                else:
+                    acumulador += (valor - valorAnt*2)
 
             else:
-                acumulador += (valor - valorAnt*2)
+                acumulador += valor
 
-        else:
-            acumulador += valor
-
-        valorAnt = valor
-    return acumulador
+            valorAnt = valor
+            caracterAnt = caracter
+        return acumulador
+    else:
+        raise ValueError(
+            "Error, no se puede poner más de 3 veces el mismo caracter")

@@ -1,4 +1,4 @@
 from romanos import *
 
-x = a_numero("MMMM")
+x = a_numero("XLXXIVV")
 print(x)
