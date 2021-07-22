@@ -26,24 +26,53 @@ class RomanosTest(unittest.TestCase):
         self.assertEqual(a_numero('CM'), 900)
         with self.assertRaises(ValueError):
             a_numero('IL')
+        with self.assertRaises(ValueError):
             a_numero('IC')
+        with self.assertRaises(ValueError):
             a_numero('IM')
+        with self.assertRaises(ValueError):
             a_numero('XM')
+        with self.assertRaises(ValueError):
             a_numero('XD')
 
     def test_no_mas_de_tres_repeticiones(self):
         self.assertEqual(a_numero('III'), 3)
         with self.assertRaises(ValueError):
             a_numero('IIII')
+        with self.assertRaises(ValueError):
             a_numero('VVVV')
+        with self.assertRaises(ValueError):
             a_numero('XXXX')
+        with self.assertRaises(ValueError):
             a_numero('CCCC')
+        with self.assertRaises(ValueError):
             a_numero('DDDD')
 
     def test_no_resta_dos_iguales(self):
         with self.assertRaises(ValueError):
             a_numero('CCM')
+        with self.assertRaises(ValueError):
             a_numero('XXL')
+        with self.assertRaises(ValueError):
             a_numero('IIV')
+        with self.assertRaises(ValueError):
             a_numero('IIX')
-            a_numero('CCD')
+        with self.assertRaises(ValueError):
+            a_numero('CCCD')
+
+
+    def test_no_repeticiones_V(self):
+        with self.assertRaises(ValueError):
+            a_numero('VV')
+        with self.assertRaises(ValueError):
+            a_numero('MDVVV')
+        with self.assertRaises(ValueError):
+            a_numero('MMDDCC')
+
+    def restar_dos_veces_seguidas(self):
+        with self.assertRaises(ValueError):
+            a_numero('IXC')
+        with self.assertRaises(ValueError):
+            a_numero('XCM')
+        with self.assertRaises(ValueError):
+            a_numero('MIXC')

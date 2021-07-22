@@ -17,14 +17,6 @@ romanos = {
 }
 
 
-def caracteres_correctos(n):
-    for c in romanos.keys():
-        c = c*4
-        if c in n:
-            return False
-    return True
-
-
 def validar_n(n):
     if not isinstance(n, int):
         raise ValueError("{} debe ser un entero".format(n))
@@ -60,29 +52,40 @@ def a_romano(n):
 def a_numero(n):
     acumulador = 0
     valorAnt = 0
-    caracterAnt = ""
-    if caracteres_correctos(n):
-        for caracter in n:
-            valor = romanos[caracter]
-            if valor > valorAnt:
-                if valorAnt > 0 and n[n.index(caracterAnt)+1] == caracterAnt:
-                    raise ValueError(
-                        "No se puede restar dos veces al mismo número.")
-                if valorAnt in (5, 50, 500):
-                    raise ValueError("No se pueden restar V, L, D")
-                if valorAnt > 0 and valor > 10*valorAnt:
-                    raise ValueError(
-                        "No se pueden restar entre dígitos 10 veces mayores.")
+    cuenta_repeticiones = 0
+    resta = 0
+    for caracter in n:
+        valor = romanos[caracter]
 
-                else:
-                    acumulador += (valor - valorAnt*2)
+        if valorAnt and valor > valorAnt:
+            if cuenta_repeticiones > 0:
+                raise ValueError(
+                    "No se pueden hacer restas dentro de repeticiones")
+            if valorAnt in (5, 50, 500):
+                raise ValueError("No se pueden restar V, L, D")
+            if valor > 10*valorAnt:
+                raise ValueError(
+                    "No se pueden restar entre dígitos 10 veces mayores.")
+            if resta > 0:
+                raise ValueError("No se pueden restar dos numeros seguidos")
 
             else:
-                acumulador += valor
+                acumulador += (valor - valorAnt*2)
+                resta += 1
+        else:
+            acumulador += valor
+            resta = 0
 
-            valorAnt = valor
-            caracterAnt = caracter
-        return acumulador
-    else:
-        raise ValueError(
-            "Error, no se puede poner más de 3 veces el mismo caracter")
+        if valor == valorAnt:
+            if valor in (5, 50, 500):
+                raise ValueError("No se puede repetir V, L ó D")
+            cuenta_repeticiones += 1
+            if cuenta_repeticiones == 3:
+                raise ValueError(
+                    "Demasiadas repeticiones de {}".format(caracter))
+        else:
+            cuenta_repeticiones = 0
+
+        valorAnt = valor
+
+    return acumulador
