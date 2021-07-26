@@ -2,22 +2,26 @@ import unittest
 from romanos import a_numero
 
 
-class RomanosTest(unittest.TestCase):
-    def test_romanos(self):
+class RomanosTests(unittest.TestCase):
+    def test_digitos_romanos(self):
         self.assertEqual(a_numero('I'), 1)
         self.assertEqual(a_numero('V'), 5)
 
     def test_numeros_completos(self):
         self.assertEqual(a_numero('XXV'), 25)
-        self.assertEqual(a_numero('XXIV'), 24)
+        self.assertEqual(a_numero('CDXXIV'), 424)
 
-    def test_no_se_restan_VLD(self):
+    def test_no_se_resta_ni_V_L_D(self):
         with self.assertRaises(ValueError):
             a_numero('VC')
+        with self.assertRaises(ValueError):
+            a_numero('LM')
+        with self.assertRaises(ValueError):
             a_numero('LD')
+        with self.assertRaises(ValueError):
             a_numero('DM')
 
-    def test_no_se_resta_mas_de_un_orden(self):
+    def test_no_se_resta_mas_de_un_salto(self):
         self.assertEqual(a_numero('IV'), 4)
         self.assertEqual(a_numero('IX'), 9)
         self.assertEqual(a_numero('XL'), 40)
@@ -35,44 +39,34 @@ class RomanosTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             a_numero('XD')
 
-    def test_no_mas_de_tres_repeticiones(self):
+    def tests_no_mas_de_tres_repeticiones(self):
         self.assertEqual(a_numero('III'), 3)
+        self.assertEqual(a_numero('XXXIII'), 33)
+
         with self.assertRaises(ValueError):
             a_numero('IIII')
-        with self.assertRaises(ValueError):
-            a_numero('VVVV')
-        with self.assertRaises(ValueError):
-            a_numero('XXXX')
-        with self.assertRaises(ValueError):
-            a_numero('CCCC')
-        with self.assertRaises(ValueError):
-            a_numero('DDDD')
 
-    def test_no_resta_dos_iguales(self):
+    def test_no_restas_dos_iguales(self):
+    
         with self.assertRaises(ValueError):
             a_numero('CCM')
         with self.assertRaises(ValueError):
-            a_numero('XXL')
-        with self.assertRaises(ValueError):
-            a_numero('IIV')
+            a_numero('CCCM')
         with self.assertRaises(ValueError):
             a_numero('IIX')
-        with self.assertRaises(ValueError):
-            a_numero('CCCD')
 
-
-    def test_no_repeticiones_V(self):
-        with self.assertRaises(ValueError):
-            a_numero('VV')
-        with self.assertRaises(ValueError):
-            a_numero('MDVVV')
-        with self.assertRaises(ValueError):
-            a_numero('MMDDCC')
-
-    def restar_dos_veces_seguidas(self):
-        with self.assertRaises(ValueError):
-            a_numero('IXC')
-        with self.assertRaises(ValueError):
-            a_numero('XCM')
+    def test_no_restas_consecutivas(self):
         with self.assertRaises(ValueError):
             a_numero('MIXC')
+
+    def test_no_repeticiones_cincos(self):
+        with self.assertRaises(ValueError):
+            a_numero('DD')
+        with self.assertRaises(ValueError):
+            a_numero('MDDLL')   
+        with self.assertRaises(ValueError):
+            a_numero('MDLLL')   
+
+
+
+
