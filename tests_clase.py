@@ -22,4 +22,29 @@ class RomanNumberClassTests(unittest.TestCase):
         uno = RomanNumber(1)
 
         self.assertEqual(uno, 'I')
+    
+
+    def test_metodos_magicos_comparaciones(self):
+        uno = RomanNumber(1)
+        dos = RomanNumber(2)
+        self.assertEqual(uno, 1)
+        self.assertEqual(uno, 1.0)
+        self.assertEqual(uno, 'I')
+
+        with self.assertRaises(ValueError):
+            self.assertEqual(uno, {})
+
+        self.assertNotEqual(uno, 2)
+        self.assertNotEqual(uno, 1.1)
+        self.assertNotEqual(uno, 2.0)
+        self.assertNotEqual(uno, 'II')
+        with self.assertRaises(ValueError):
+            self.assertEqual(uno, {})
+
+        self.assertTrue(dos > uno)
+        self.assertTrue(dos > 1)
+        self.assertTrue(dos > 1.3)
+
+        self.assertFalse(uno > 2)
+        
 

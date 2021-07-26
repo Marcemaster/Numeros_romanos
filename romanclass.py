@@ -101,3 +101,60 @@ class RomanNumber():
         if isinstance(other, str):
             return self.cadena == other
         raise ValueError("{} solo puede ser entero, cadena, flotante o RomanNumber".format(other))
+
+
+    def __ne__(self, other):        
+        if isinstance(other, RomanNumber):
+            return self.valor != other.valor
+        if isinstance(other, int):
+            return self.valor != other
+        if isinstance(other, float):
+            return self.valor != other
+        if isinstance(other, str):
+            return self.cadena != other
+        raise ValueError("{} solo puede ser entero, cadena, flotante o RomanNumber".format(other))
+
+
+    def __gt__(self, other):
+        if isinstance(other, RomanNumber):
+            return self.valor > other.valor
+        if isinstance(other, int):
+            return self.valor > other
+        if isinstance(other, float):
+            return self.valor > other
+        if isinstance(other, str):
+            return self.valor > RomanNumber(other).valor
+        raise ValueError("{} solo puede ser entero, cadena, flotante o RomanNumber".format(other))
+
+    def __lt__(self, other):
+        if isinstance(other, RomanNumber):
+            return self.valor < other.valor
+        if isinstance(other, int):
+            return self.valor < other
+        if isinstance(other, float):
+            return self.valor < other
+        if isinstance(other, str):
+            return self.valor < RomanNumber(other).valor
+        raise ValueError("{} solo puede ser entero, cadena, flotante o RomanNumber".format(other))
+
+    
+    def __add__(self, other):
+        if isinstance(ohter, RomanNumber):
+            return RomanNumber(other.valor + self.valor)
+
+        if isinstance(other, int):
+            return RomanNumber(other + self.valor)
+        
+        if isinstance(other, float):
+            raise ValueError("{} solo puede ser entero, cadena o RomanNumber".format(other))
+            
+        if isinstance(other, str):
+            other = RomanNumber(other)
+            return RomanNumber(self.valor + other.valor)
+
+    
+    def __radd__(self, other):
+        return self.__add__(other)
+
+    def __iadd__(self, other):
+        return self.__add__(other)
