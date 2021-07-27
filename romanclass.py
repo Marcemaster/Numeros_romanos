@@ -8,9 +8,8 @@ class RomanNumber():
     }
 
     digitos_romanos = {
-    'I': 1, 'V': 5, 'X': 10, 'L':50, 'C': 100, 'D': 500, 'M': 1000
+        'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000
     }
-
 
     def __init__(self, valor):
 
@@ -55,15 +54,18 @@ class RomanNumber():
 
             if valor_ant and valor > valor_ant:
                 if cuenta_restas > 0:
-                    raise ValueError("No se pueden realizar restas consecutivas")
+                    raise ValueError(
+                        "No se pueden realizar restas consecutivas")
                 if cuenta_repeticiones > 0:
-                    raise ValueError("No se pueden hacer restas dentro de repeticiones")
+                    raise ValueError(
+                        "No se pueden hacer restas dentro de repeticiones")
 
                 if valor_ant in (5, 50, 500):
                     raise ValueError("No se pueden restar V, L o D")
 
                 if valor_ant > 0 and valor > 10 * valor_ant:
-                    raise ValueError("No se admiten restas entre dígitos 10 veces mayores")
+                    raise ValueError(
+                        "No se admiten restas entre dígitos 10 veces mayores")
 
                 acumulador = acumulador - valor_ant
                 acumulador = acumulador + valor - valor_ant
@@ -76,13 +78,14 @@ class RomanNumber():
                 if valor in (5, 50, 500):
                     raise ValueError("No se pueden repetir V, L ó D")
                 cuenta_repeticiones += 1
-                if cuenta_repeticiones == 3:                        
-                    raise ValueError("Demasiadas repeticiones de {}".format(caracter))
+                if cuenta_repeticiones == 3:
+                    raise ValueError(
+                        "Demasiadas repeticiones de {}".format(caracter))
             else:
                 cuenta_repeticiones = 0
 
             valor_ant = valor
-        
+
         return acumulador
 
     def __str__(self):
@@ -100,10 +103,10 @@ class RomanNumber():
             return self.valor == other
         if isinstance(other, str):
             return self.cadena == other
-        raise ValueError("{} solo puede ser entero, cadena, flotante o RomanNumber".format(other))
+        raise ValueError(
+            "{} solo puede ser entero, cadena, flotante o RomanNumber".format(other))
 
-
-    def __ne__(self, other):        
+    def __ne__(self, other):
         if isinstance(other, RomanNumber):
             return self.valor != other.valor
         if isinstance(other, int):
@@ -112,8 +115,8 @@ class RomanNumber():
             return self.valor != other
         if isinstance(other, str):
             return self.cadena != other
-        raise ValueError("{} solo puede ser entero, cadena, flotante o RomanNumber".format(other))
-
+        raise ValueError(
+            "{} solo puede ser entero, cadena, flotante o RomanNumber".format(other))
 
     def __gt__(self, other):
         if isinstance(other, RomanNumber):
@@ -124,7 +127,20 @@ class RomanNumber():
             return self.valor > other
         if isinstance(other, str):
             return self.valor > RomanNumber(other).valor
-        raise ValueError("{} solo puede ser entero, cadena, flotante o RomanNumber".format(other))
+        raise ValueError(
+            "{} solo puede ser entero, cadena, flotante o RomanNumber".format(other))
+
+    def __ge__(self, other):
+        if isinstance(other, RomanNumber):
+            return self.valor >= other.valor
+        if isinstance(other, int):
+            return self.valor >= other
+        if isinstance(other, float):
+            return self.valor >= other
+        if isinstance(other, str):
+            return self.valor >= RomanNumber(other).valor
+        raise ValueError(
+            "{} solo puede ser entero, cadena, flotante o RomanNumber".format(other))
 
     def __lt__(self, other):
         if isinstance(other, RomanNumber):
@@ -135,24 +151,36 @@ class RomanNumber():
             return self.valor < other
         if isinstance(other, str):
             return self.valor < RomanNumber(other).valor
-        raise ValueError("{} solo puede ser entero, cadena, flotante o RomanNumber".format(other))
+        raise ValueError(
+            "{} solo puede ser entero, cadena, flotante o RomanNumber".format(other))
 
-    
+    def __le__(self, other):
+        if isinstance(other, RomanNumber):
+            return self.valor <= other.valor
+        if isinstance(other, int):
+            return self.valor <= other
+        if isinstance(other, float):
+            return self.valor <= other
+        if isinstance(other, str):
+            return self.valor <= RomanNumber(other).valor
+        raise ValueError(
+            "{} solo puede ser entero, cadena, flotante o RomanNumber".format(other))
+
     def __add__(self, other):
-        if isinstance(ohter, RomanNumber):
+        if isinstance(other, RomanNumber):
             return RomanNumber(other.valor + self.valor)
 
         if isinstance(other, int):
             return RomanNumber(other + self.valor)
-        
+
         if isinstance(other, float):
-            raise ValueError("{} solo puede ser entero, cadena o RomanNumber".format(other))
-            
+            raise ValueError(
+                "{} solo puede ser entero, cadena o RomanNumber".format(other))
+
         if isinstance(other, str):
             other = RomanNumber(other)
             return RomanNumber(self.valor + other.valor)
 
-    
     def __radd__(self, other):
         return self.__add__(other)
 

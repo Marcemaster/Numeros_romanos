@@ -1,6 +1,7 @@
 import unittest
 from romanclass import *
 
+
 class RomanNumberClassTests(unittest.TestCase):
     def test_crear_Numero_romano(self):
         uno = RomanNumber(1)
@@ -22,7 +23,6 @@ class RomanNumberClassTests(unittest.TestCase):
         uno = RomanNumber(1)
 
         self.assertEqual(uno, 'I')
-    
 
     def test_metodos_magicos_comparaciones(self):
         uno = RomanNumber(1)
@@ -46,5 +46,6 @@ class RomanNumberClassTests(unittest.TestCase):
         self.assertTrue(dos > 1.3)
 
         self.assertFalse(uno > 2)
-        
 
+    def metodos_magicos_aritmeticos(self):
+        uno = RomanNumber(1)
